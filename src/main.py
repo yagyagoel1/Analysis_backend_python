@@ -1,15 +1,10 @@
 from typing import Union 
 from fastapi import FastAPI
-
+from api.events import router as eventRouter
 app = FastAPI()
+app.include_router(eventRouter,prefix="/api/events")
 
 
-
-@app.get("/")
-def read_root():
-    return {
-        "Hello":"World"
-    }
 
 
 @app.get("/items/{item_id}")
@@ -21,4 +16,10 @@ def getItemUsingId(item_id):
         "love":{
             "lovable":item_id
         }
+    }
+
+@app.get("/healthz")
+def Heallthz():
+    return {
+        "Status":"OK"
     }
