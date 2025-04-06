@@ -1,6 +1,5 @@
 from fastapi import APIRouter
-from .schemas import EventSchemas
-from .schemas import EventListSchemas
+from .schemas import (EventSchemas,EventListSchemas,EventCreateSchema,EventUpdateSchema)
 
 router = APIRouter()
 
@@ -20,12 +19,16 @@ def get_event(event_id:int) -> EventSchemas:
 
 
 @router.post("/")
-def create_event(data:dict ={})-> EventSchemas:
+def create_event(data: EventCreateSchema)-> EventSchemas:
     print(data)
-    return {"id":data.get("id")}
+    print(data.page)
+    print(data.model_dump())
+    payload = data.model_dump()
+    return {"id":1,**payload}
   
 @router.put("/{event_id}")
-def update_event(event_id:int,payload:dict={})-> EventSchemas:
+def update_event(event_id:int,payload:EventUpdateSchema)-> EventSchemas:
     print(payload,"payload")
     print(event_id)
+    print(payload.description)
     return {"id":event_id}
