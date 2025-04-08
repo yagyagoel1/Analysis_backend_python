@@ -1,10 +1,9 @@
 from fastapi import APIRouter,Depends,HTTPException
 from .schemas import (EventSchemas,EventListSchemas,EventCreateSchema,EventUpdateSchema)
-from .models import EventModel
+from .models import EventModel,get_utc_now
 import os 
 from sqlmodel import Session,select
 from api.db.session import get_session
-
 router = APIRouter()
 from api.db.config import DATABASE_URL
 
@@ -12,7 +11,7 @@ from api.db.config import DATABASE_URL
 
 @router.get("/",response_model=EventListSchemas)
 def readEvents(session:Session= Depends(get_session)):
-    query = select(EventModel).order_by(EventModel.id.desc()).limit(10)
+    query = select(EventModel).order_by(EventModel.updated_at.desc()).limit(10)
     results = session.exec(query).all()
     return {
         "results":results,
@@ -49,6 +48,7 @@ def update_event(event_id:int,payload:EventUpdateSchema,session:Session=Depends(
     data =payload.model_dump()
     for k,v in data.items():
         setattr(obj,k,v)
+    obj.updated_at=get_utc_now()
     session.add(obj)
     session.commit()
     session.refresh(obj)
