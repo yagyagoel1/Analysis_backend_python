@@ -8,9 +8,9 @@ class EventSchemas(BaseModel):
 
 class EventListSchemas(BaseModel):
     results: List[EventSchemas]
+    count: int
 
 class EventCreateSchema(BaseModel):
-    path: str
     page: Optional[str] = ""
     description: Optional[str] = ""
 
