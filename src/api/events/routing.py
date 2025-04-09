@@ -59,19 +59,9 @@ def read_events(
         )
     )
     raw_results = session.exec(query).fetchall()
-    formatted_results = []
-    for result in raw_results:
-        # Create a dictionary with the correct field names
-        item = EventBucketSchemas(
-            bucket=result[0],  # datetime
-            operating_system=result[1],  # OS
-            page=result[2],  # page 
-            avg_duration=result[3],  # avg_duration
-            count=result[4]  # count
-        )
-        formatted_results.append(item)
+  
     
-    return formatted_results
+    return raw_results
 
 
 @router.get("/{event_id}",response_model=EventModel)
