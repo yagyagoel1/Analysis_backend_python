@@ -11,9 +11,7 @@ A FastAPI-based application designed for tracking user activity. The project is 
 - [Installation and Setup](#installation-and-setup)
 - [Docker & Docker Compose](#docker--docker-compose)
 - [Usage](#usage)
-- [Environment Variables](#environment-variables)
-- [Contributing](#contributing)
-- [License](#license)
+
 
 ## Overview
 
